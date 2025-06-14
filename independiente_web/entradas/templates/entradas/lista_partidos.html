@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Entradas - Independiente{% endblock %}
+
+{% block content %}
+<h2>Próximos partidos</h2>
+<div class="row">
+  {% for partido in partidos %}
+    <div class="col-md-4 mb-4">
+      <div class="card">
+        {% if partido.imagen %}
+          <img src="{{ partido.imagen.url }}" class="card-img-top" alt="{{ partido.titulo }}">
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title">{{ partido.titulo }}</h5>
+          <p class="card-text">{{ partido.descripcion|truncatewords:20 }}</p>
+          <a href="{% url 'entradas:detalle_partido' partido.pk %}" class="btn btn-danger">Ver entradas</a>
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <p>No hay partidos disponibles.</p>
+  {% endfor %}
+</div>
+{% endblock %}

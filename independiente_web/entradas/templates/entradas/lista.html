@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Entradas Disponibles</h2>
+{% if object_list %}
+    <ul>
+        {% for entrada in object_list %}
+            <li>
+                <a href="{% url 'entrada_detalle' entrada.pk %}">{{ entrada.titulo }}</a> - {{ entrada.fecha }}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No hay entradas aún.</p>
+{% endif %}
+<a href="{% url 'entrada_crear' %}">Crear nueva entrada</a>
+{% endblock %}

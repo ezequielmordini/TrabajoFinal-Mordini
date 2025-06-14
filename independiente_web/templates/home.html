@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio - Independiente{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="jumbotron p-5 bg-danger text-white rounded">
+    <h1 class="display-4">Bienvenido al Club Atlético Independiente</h1>
+    <p class="lead">La WEB oficial del Club Atletico Independiente</p>
+    <hr class="my-4" />
+    <p>Accedé a las últimas novedades, entradas y más.</p>
+    <a class="btn btn-light btn-lg" href="{% url 'entradas:lista_partidos' %}" role="button">Ver Entradas</a>
+  </div>
+
+  <div class="row mt-5">
+    <div class="col-md-6">
+      <h2>Noticias Recientes</h2>
+      {% if entradas %}
+        <ul class="list-group">
+          {% for entrada in entradas %}
+            <li class="list-group-item">
+              <h5>{{ entrada.titulo }}</h5>
+              <p>{{ entrada.descripcion|truncatewords:20 }}</p>
+              <small class="text-muted">{{ entrada.fecha }}</small><br>
+              <a href="{% url 'entradas:detalle_entrada' entrada.pk %}" class="btn btn-sm btn-outline-primary mt-2">Leer más</a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>Se cerró el fichaje de Walter Mazzanti como nuevo fichaje del rojo</p>
+      {% endif %}
+    </div>
+
+    <div class="col-md-6">
+      <h2>Eventos y Partidos</h2>
+      <p>Próximos partidos y eventos para no perderte nada.</p>
+      <!-- Acá podrías mostrar partidos futuros si tenés ese modelo -->
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Compra Exitosa{% endblock %}
+
+{% block content %}
+<div class="alert alert-success">
+  <h3>¡Compra realizada con éxito!</h3>
+  <p>Gracias por adquirir tus entradas. ¡Nos vemos en el estadio!</p>
+</div>
+<a href="{% url 'entradas:lista_partidos' %}" class="btn btn-primary">Volver a partidos</a>
+{% endblock %}
