@@ -6,7 +6,7 @@
 <p>Biografía: {{ perfil.bio }}</p>
 <p>Fecha de nacimiento: {{ perfil.nacimiento }}</p>
 {% if perfil.avatar %}
-    <img src="{{ avatares/bochini.png }}" width="100">
+<p>Ruta avatar: {{ perfil.avatar_url }}</p>
 {% endif %}
 <p><a href="{% url 'editar_perfil' %}">Editar perfil</a></p>
 {% endblock %}

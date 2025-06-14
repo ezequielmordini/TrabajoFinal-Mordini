@@ -1,9 +1,11 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.conf import settings
+
 
 class Perfil(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(upload_to='avatares/bochini.png', null=True, blank=True)
+    avatar = models.ImageField(upload_to='avatares/', null=True, blank=True)
     bio = models.TextField(blank=True)
     nacimiento = models.DateField(null=True, blank=True)
     

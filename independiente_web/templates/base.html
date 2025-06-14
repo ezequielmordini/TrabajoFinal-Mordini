@@ -21,8 +21,11 @@
         <a href="{% url 'entradas:lista_partidos' %}" class="text-white me-3">Entradas</a>
 
         {% if user.is_authenticated %}
-        <img src="{{ user.perfil.avatar_url }}" alt="Avatar" class="rounded-circle" width="40" height="40" style="object-fit: cover;"/>
-          <span class="me-2">Bienvenido, {{ user.username }}</span>
+          <img src="{{ user.perfil.avatar_url }}" alt="Avatar" class="rounded-circle me-2" width="40" height="40" style="object-fit: cover;"/>
+          <div class="me-3 text-white d-flex flex-column align-items-start">
+            <div>Bienvenido, {{ user.username }}</div>
+            <a href="{% url 'accounts:mi_perfil' %}" class="text-white text-decoration-underline" style="font-size: 0.9em;">Mi Perfil</a>
+          </div>
 
           <form action="{% url 'accounts:logout' %}" method="post" style="display: inline;">
             {% csrf_token %}
