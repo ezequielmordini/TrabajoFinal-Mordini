@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}{{ noticia.titulo }} - Independiente{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h1>{{ noticia.titulo }}</h1>
+  <p class="text-muted">{{ noticia.fecha|date:"d/m/Y" }} - por {{ noticia.autor }}</p>
+  {% if noticia.imagen %}
+    <img src="{{ noticia.imagen.url }}" class="img-fluid my-3">
+  {% endif %}
+  <h4>{{ noticia.subtitulo }}</h4>
+  <div>
+    {{ noticia.cuerpo|safe }}
+  </div>
+</div>
+{% endblock %}

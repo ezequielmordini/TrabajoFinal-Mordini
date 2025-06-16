@@ -7,7 +7,7 @@ from .models import Perfil
 class PerfilForm(forms.ModelForm):
     class Meta:
         model = Perfil
-        fields = ['avatar', 'bio', 'nacimiento']
+        fields = ['avatar', 'estado_socio']
         
 class RegistroForm(UserCreationForm):
     email = forms.EmailField(required=True)

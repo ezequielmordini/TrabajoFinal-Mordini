@@ -1,9 +1,10 @@
-# entradas/views.py
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import EntradaPartido, TipoEntrada, CompraEntrada
 from django.contrib.auth.decorators import login_required
 from django import forms
 from django.views.generic import ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 
 class CompraForm(forms.Form):
@@ -24,13 +25,11 @@ def detalle_partido(request, pk):
             if cantidad > tipo_entrada.stock:
                 form.add_error('cantidad', 'No hay stock suficiente')
             else:
-                # Registrar compra
                 CompraEntrada.objects.create(
                     usuario=request.user,
                     tipo_entrada=tipo_entrada,
                     cantidad=cantidad
                 )
-                # Reducir stock
                 tipo_entrada.stock -= cantidad
                 tipo_entrada.save()
                 return redirect('entradas:compra_exitosa')
@@ -51,8 +50,12 @@ def lista_partidos(request):
     partidos = EntradaPartido.objects.all().order_by('fecha_partido')
     return render(request, 'entradas/lista_partidos.html', {'partidos': partidos})
 
-class EntradaListView(ListView):
-    model = EntradaPartido
-    template_name = 'entradas/lista_partidos.html'  
-    context_object_name = 'partidos'
-    ordering = ['fecha_partido']
+
+class CompraEntradaListView(LoginRequiredMixin, ListView):
+    model = CompraEntrada
+    template_name = 'entradas/mis_entradas.html'  
+    context_object_name = 'compras'
+
+# Solo mostrar las entradas compradas del usuario actual
+    def get_queryset(self):
+        return CompraEntrada.objects.filter(usuario=self.request.user).order_by('-fecha_compra')

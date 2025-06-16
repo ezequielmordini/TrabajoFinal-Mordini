@@ -1,14 +1,26 @@
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from .models import Noticia
+from .models import Noticia, Partido
 from .forms import NoticiaForm
 from django.shortcuts import render
+from entradas.models import EntradaPartido
 
+from .models import Noticia
 
 def home(request):
-    entradas = Entrada.objects.order_by('-fecha')[:5]  # Últimas 5
-    return render(request, 'home.html', {'entradas': entradas})
+    noticias = Noticia.objects.order_by('-fecha')[:5]
+    print("Noticias encontradas:", noticias)
+
+    proximo_partido = Partido.objects.order_by('fecha', 'hora').first()
+    print("Próximo partido:", proximo_partido)
+
+    return render(request, 'home.html', {
+        'noticias': noticias,
+        'proximo_partido': proximo_partido
+    })
+
+
 
 
 class NoticiaListView(ListView):

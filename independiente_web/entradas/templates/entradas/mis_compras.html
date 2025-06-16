@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Mis Compras - Entradas{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2>Mis Compras de Entradas</h2>
+    {% if compras %}
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Partido</th>
+            <th>Tipo de Entrada</th>
+            <th>Cantidad</th>
+            <th>Fecha de Compra</th>
+            <th>Precio Unitario</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for compra in compras %}
+          <tr>
+            <td>{{ compra.tipo_entrada.partido.titulo }}</td>
+            <td>{{ compra.tipo_entrada.nombre }}</td>
+            <td>{{ compra.cantidad }}</td>
+            <td>{{ compra.fecha_compra|date:"d/m/Y H:i" }}</td>
+            <td>${{ compra.tipo_entrada.precio }}</td>
+            <td>${{ compra.tipo_entrada.precio|floatformat:2|add:"0"|floatformat:2|floatformat }} * {{ compra.cantidad }} = {{ compra.tipo_entrada.precio|floatformat:2|floatformat }} * {{ compra.cantidad }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No has comprado entradas aún.</p>
+    {% endif %}
+  </div>
+{% endblock %}
