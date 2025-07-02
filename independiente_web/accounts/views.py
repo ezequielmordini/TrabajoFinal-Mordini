@@ -44,7 +44,7 @@ def mi_perfil(request):
 
 @login_required
 def editar_perfil(request):
-    perfil = request.user.perfil
+    perfil = request.user
     if request.method == 'POST':
         form = PerfilForm(request.POST, request.FILES, instance=perfil)
         if form.is_valid():

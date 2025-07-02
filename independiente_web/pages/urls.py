@@ -7,6 +7,7 @@ from .views import (
     NoticiaDeleteView,
     home
 )
+from .views import about_view
 
 urlpatterns = [
     path('', home, name='home'),  
@@ -15,4 +16,5 @@ urlpatterns = [
     path('noticias/crear/', NoticiaCreateView.as_view(), name='noticia_create'),
     path('noticias/<int:pk>/editar/', NoticiaUpdateView.as_view(), name='noticia_update'),
     path('noticias/<int:pk>/eliminar/', NoticiaDeleteView.as_view(), name='noticia_delete'),
+    path('acerca-de-mi/', about_view, name='about'),
 ]
