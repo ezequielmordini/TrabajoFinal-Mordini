@@ -51,3 +51,8 @@ class NoticiaDeleteView(LoginRequiredMixin, DeleteView):
     model = Noticia
     template_name = 'pages/noticia_confirm_delete.html'
     success_url = reverse_lazy('noticia_list')
+
+#Agregando el aboutme
+
+def about_view(request):
+    return render(request, 'pages/about.html')

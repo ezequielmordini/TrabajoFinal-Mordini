@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Administración de Partidos</h1>
+  <a href="{% url 'entradas:admin_partido_create' %}">Crear nuevo partido</a>
+  <table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Título</th>
+        <th>Ubicación</th>
+        <th>Fecha</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for partido in partidos %}
+      <tr>
+        <td>{{ partido.titulo }}</td>
+        <td>{{ partido.ubicacion }}</td>
+        <td>{{ partido.fecha_partido|date:"d/m/Y H:i" }}</td>
+        <td>
+          <a href="{% url 'entradas:admin_partido_edit' partido.pk %}">Editar</a> |
+          <a href="{% url 'entradas:admin_partido_delete' partido.pk %}">Borrar</a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="4">No hay partidos cargados.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

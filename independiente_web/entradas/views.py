@@ -4,6 +4,13 @@ from django.contrib.auth.decorators import login_required
 from django import forms
 from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import UserPassesTestMixin
+from .forms import EntradaPartidoForm
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+
+
+
 
 
 
@@ -59,3 +66,29 @@ class CompraEntradaListView(LoginRequiredMixin, ListView):
 # Solo mostrar las entradas compradas del usuario actual
     def get_queryset(self):
         return CompraEntrada.objects.filter(usuario=self.request.user).order_by('-fecha_compra')
+    
+class SoloStaffMixin(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.is_staff
+    
+class EntradaPartidoListView(SoloStaffMixin, ListView):
+    model = EntradaPartido
+    template_name = 'entradas/admin/entrada_partido_list.html'  # crear template admin específico
+    context_object_name = 'partidos'
+
+class EntradaPartidoCreateView(SoloStaffMixin, CreateView):
+    model = EntradaPartido
+    form_class = EntradaPartidoForm
+    template_name = 'entradas/admin/entrada_partido_form.html'
+    success_url = reverse_lazy('entradas:admin_partido_list')
+
+class EntradaPartidoUpdateView(SoloStaffMixin, UpdateView):
+    model = EntradaPartido
+    form_class = EntradaPartidoForm
+    template_name = 'entradas/admin/entrada_partido_form.html'
+    success_url = reverse_lazy('entradas:admin_partido_list')
+
+class EntradaPartidoDeleteView(SoloStaffMixin, DeleteView):
+    model = EntradaPartido
+    template_name = 'entradas/admin/confirmar_borrado.html'
+    success_url = reverse_lazy('entradas:admin_partido_list')
